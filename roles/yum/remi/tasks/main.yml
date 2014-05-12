@@ -1,0 +1,8 @@
+- name: Yum -> add Remi
+  yum: name=http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
+
+- name: Yum -> enable Remi
+  ini_file: dest=/etc/yum.repos.d/remi.repo
+    section=remi
+    option=enabled
+    value=1

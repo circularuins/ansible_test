@@ -1,0 +1,19 @@
+- name: Yum -> add MySQL
+  yum: name=http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm
+
+- name: Install -> MySQL
+  yum: name={{ item }}
+  with_items:
+    - mysql-client
+    - mysql-server
+    - mysql-devel
+    - mysql-utilities
+
+- name: character_set_(database|server) -> utf8
+  ini_file: dest=/etc/my.cnf
+    section=mysqld
+    option=character-set-server
+    value=utf8
+
+- name: MySQL -> enable
+  service: name=mysqld enabled=yes state=started

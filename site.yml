@@ -1,0 +1,19 @@
+- hosts: vagrant
+  sudo: yes
+  gather_facts: no
+  roles:
+    - { role: config, tags: config }
+    - { role: config/selinux, tags: [config, config/selinux] }
+    - { role: config/ssh, tags: [config, config/ssh] }
+    - { role: perl, tags: perl }
+    - { role: service/iptables, tags: [service, service/iptables] }
+    - { role: yum/remi, tags: [yum, yum/remi] }
+    - { role: yum/epel, tags: [yum, yum/epel] }
+    - { role: service/mysql, tags: [service, service/mysql] }
+    - { role: service/ntp, tags: [service, service/ntp] }
+    - { role: service/nginx, tags: [service, service/nginx] }
+    - { role: service/tools, tags: [service, service/tools] }
+    # - { role: service/emacs, tags: [service, service/emacs] }
+    - { role: schoolg/middleware, tags: [schoolg, schoolg/middleware] }
+    - { role: schoolg/cpan, tags: [schoolg, schoolg/cpan] }
+    # - { role: schoolg/src, tags: [schoolg, schoolg/src] }

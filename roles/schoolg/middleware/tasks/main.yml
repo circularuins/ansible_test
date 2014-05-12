@@ -1,0 +1,16 @@
+- name: Install middleware
+  yum: name={{ item }}
+  with_items:
+    - memcached
+    - libxml2
+    - libxml2-devel
+    - monit
+    - libgtop2
+    - libgtop2-devel
+    - httpd
+    - nfs-utils
+    - nfs-utils-lib
+    - firefox
+    - xorg-x11-server-Xvfb
+    - urw-fonts
+    - xorg-x11-xauth

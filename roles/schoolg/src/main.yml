@@ -1,0 +1,2 @@
+- name: Download -> schoolg
+  git: repo=git@bitbucket.org:gaiax/schoolg.git dest=/home/vagrant accept_hostkey=yes

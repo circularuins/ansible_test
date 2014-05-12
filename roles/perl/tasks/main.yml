@@ -1,0 +1,20 @@
+- name: PATH -> perl
+  lineinfile: dest=/home/vagrant/.bash_profile state=present regexp='^PATH=' line='PATH=/opt/perl-5.18/bin:$PATH:$HOME/bin'
+
+- name: Check -> perl 5.18.2
+  shell: "su - vagrant -c 'which perl'"
+  register: perl_path
+  failed_when: perl_path.rc not in [0, 1]
+
+- name: Install -> perl 5.18.2
+  shell: 'sudo curl https://raw.github.com/tokuhirom/Perl-Build/master/perl-build | perl - 5.18.2 /opt/perl-5.18/'
+  when: perl_path.stdout != '/opt/perl-5.18/bin/perl'
+
+- name: Check -> cpanm
+  shell: "su - vagrant -c 'which cpanm'"
+  register: cpanm_path
+  failed_when: cpanm_path.rc not in [0, 1]
+
+- name: Install -> cpanm
+  shell: 'curl -L http://cpanmin.us | /opt/perl-5.18/bin/perl - --sudo App::cpanminus'
+  when: cpanm_path.stdout != '/opt/perl-5.18/bin/cpanm'

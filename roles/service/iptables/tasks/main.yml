@@ -1,0 +1,5 @@
+- name: Install -> iptables
+  yum: name=iptables
+
+- name: iptables -> disable
+  service: name=iptables enabled=no state=stopped

@@ -1,0 +1,11 @@
+- name: Hostname -> 'sg_dev'
+  hostname: name=sg_dev
+
+- name: Timezone -> JST
+  file: src=/usr/share/zoneinfo/Japan dest=/etc/localtime state=link force=yes
+
+- name: Add user -> homepage (wheel)
+  user: name=homepage group=wheel
+
+- name: Change user group -> vagrant(wheel)
+  user: name=vagrant group=wheel

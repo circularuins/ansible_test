@@ -1,0 +1,3 @@
+- name: Download -> honeybee
+  git: repo=git@bitbucket.org:gaiax/honeybee.git
+       dest=/home/vagrant

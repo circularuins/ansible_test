@@ -1,0 +1,17 @@
+- name: .sshディレクトリの作成
+  sudo: yes
+  file: state=directory path=/home/vagrant/.ssh owner=vagrant group=wheel mode=0700
+
+# - name: ローカル公開鍵のコピー
+#   sudo: yes
+#   copy: src=~/.ssh/id_dsa.pub dest=/home/vagrant/.ssh/id_dsa.pub owner=vagrant group=wheel mode=0644
+
+# - name: ローカル秘密鍵のコピー
+#   sudo: yes
+#   copy: src=~/.ssh/id_dsa dest=/home/vagrant/.ssh/id_dsa owner=vagrant group=wheel mode=0600
+
+# - name: 秘密鍵の登録
+#   sudo: no
+#   shell: >-
+#     eval `ssh-agent` &&
+#     ssh-add $HOME/.ssh/id_dsa

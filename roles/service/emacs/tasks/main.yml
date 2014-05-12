@@ -1,0 +1,78 @@
+- name: Uninstall -> autoconf
+  yum: name=autoconf state=removed
+
+- name: Check -> autoconf-2.68
+  shell: "su - vagrant -c 'which autoconf'"
+  register: autoconf_path
+  failed_when: autoconf_path.rc not in [0, 1]
+
+- name: Install -> autoconf-2.68
+  sudo: yes
+  shell: >-
+    cd /tmp &&
+    wget ftp://ftp.gnu.org/gnu/autoconf/autoconf-2.68.tar.bz2 &&
+    tar xf autoconf-2.68.tar.bz2 &&
+    cd autoconf-2.68 &&
+    ./configure --prefix=/usr &&
+    make &&
+    make install
+  when: autoconf_path.stdout != '/usr/bin/autoconf'
+
+- name: Check -> automake-1.11.6
+  shell: "su - vagrant -c 'which automake'"
+  register: automake_path
+  failed_when: automake_path.rc not in [0, 1]
+
+- name: Install -> automake-1.11.6
+  sudo: yes
+  shell: >-
+    cd /tmp &&
+    wget --passive-ftp ftp://ftp.gnu.org/gnu/automake/automake-1.11.6.tar.gz &&
+    tar -zxvf automake-1.11.6.tar.gz &&
+    cd automake-1.11.6 &&
+    ./configure --prefix=/usr &&
+    make &&
+    make install
+  when: automake_path.stdout != '/usr/bin/automake'
+
+- name: Install libs
+  yum: name={{ item }}
+  with_items:
+    - texinfo
+    - libXpm-devel
+    - giflib-devel
+    - libtiff-devel
+    - libotf-devel
+
+- name: Check -> emacs24
+  shell: "su - vagrant -c 'which emacs'"
+  register: emacs_path
+  failed_when: emacs_path.rc not in [0, 1]
+
+- name: Install -> ncurses-5.9
+  sudo: yes
+  shell: >-
+    cd /tmp &&
+    wget http://ftp.gnu.org/pub/gnu/ncurses/ncurses-5.9.tar.gz &&
+    tar -zxvf ncurses-5.9.tar.gz &&
+    cd ncurses-5.9 &&
+    ./configure &&
+    make &&
+    make install
+  when: emacs_path.stdout != '/usr/local/bin/emacs'
+
+- name: Download -> Emacs24 source
+  shell: >-
+    cd /tmp &&
+    git clone git://git.savannah.gnu.org/emacs.git
+  when: emacs_path.stdout != '/usr/local/bin/emacs'
+
+- name: Install -> Emacs24
+  sudo: yes
+  shell: >-
+    cd /tmp/emacs &&
+    ./autogen.sh &&
+    ./configure --without-x &&
+    make bootstrap &&
+    make install
+  when: emacs_path.stdout != '/usr/local/bin/emacs'

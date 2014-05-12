@@ -1,0 +1,21 @@
+- name: copy cpanfile to server
+  copy: src=files/cpanfile_b01 dest=/home/vagrant/cpanfile
+
+# "cpanm"モジュールはansible_ver1.6以上
+# - name: Install perl modules
+#   cpanm: name={{ item }}
+#   with_items:
+#     - Carton
+
+# どうしてもrootで実行されてしまうので、苦し紛れ。。
+- name: Install carton
+  sudo: no
+  shell: >-
+    /opt/perl-5.18/bin/cpanm --sudo {{ item }}
+  with_items:
+    - Carton
+
+- name: Install modules
+  sudo: no
+  shell: >-
+    /opt/perl-5.18/bin/carton install
