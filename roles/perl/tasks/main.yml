@@ -6,8 +6,15 @@
   register: perl_path
   failed_when: perl_path.rc not in [0, 1]
 
+# - name: Install -> perl 5.18.2
+#   shell: 'sudo curl https://raw.github.com/tokuhirom/Perl-Build/master/perl-build | perl - 5.18.2 /opt/perl-5.18/'
+#   when: perl_path.stdout != '/opt/perl-5.18/bin/perl'
+
+- name: copy perl-build to server
+  copy: src=files/perl-build dest=/home/vagrant/perl-build
+
 - name: Install -> perl 5.18.2
-  shell: 'sudo curl https://raw.github.com/tokuhirom/Perl-Build/master/perl-build | perl - 5.18.2 /opt/perl-5.18/'
+  shell: 'sudo cat /home/vagrant/perl-build | perl - 5.18.2 /opt/perl-5.18/'
   when: perl_path.stdout != '/opt/perl-5.18/bin/perl'
 
 - name: Check -> cpanm

@@ -1,5 +1,5 @@
-- name: copy cpanfile to server
-  copy: src=files/cpanfile_b01 dest=/home/vagrant/cpanfile
+# - name: copy cpanfile to server
+#   copy: src=files/cpanfile_b01 dest=/home/vagrant/cpanfile
 
 # "cpanm"モジュールはansible_ver1.6以上
 # - name: Install perl modules
@@ -8,14 +8,116 @@
 #     - Carton
 
 # どうしてもrootで実行されてしまうので、苦し紛れ。。
-- name: Install carton
+- name: Install Catalyst
   sudo: no
   shell: >-
-    /opt/perl-5.18/bin/cpanm --sudo {{ item }}
+    /opt/perl-5.18/bin/cpanm --force --sudo --skip-satisfied {{ item }}
   with_items:
-    - Carton
+#    - Carton
+    - Package::Stash::XS@0.24
+    - Package::Stash@0.33
+    - Class::MOP@1.12
+    - Moose@1.25
+    - MooseX::Role::Parameterized@0.27
+    - MooseX::Singleton@0.25
+    - Catalyst::Runtime@5.80033
+    - Catalyst::Devel@1.33
+    - Test::WWW::Mechanize::Catalyst@0.57
+    - DBIx::Class@0.08127
 
-- name: Install modules
+# - name: Install modules
+#   sudo: no
+#   shell: >-
+#     /opt/perl-5.18/bin/carton install
+
+- name: Install Catalyst
   sudo: no
   shell: >-
-    /opt/perl-5.18/bin/carton install
+    /opt/perl-5.18/bin/cpanm --force --sudo --skip-satisfied {{ item }}
+  with_items:
+    - AnyEvent
+    - AnyEvent::HTTP
+    - Cache::Memcached
+    - Cache::Memcached::Fast
+    - Catalyst::Authentication::Store::DBIx::Class
+    - Catalyst::Model::DBIC::Schema
+    - Catalyst::Model::MultiAdaptor
+    - Catalyst::Plugin::Authorization::Roles
+    - Catalyst::Plugin::FillInForm
+    - Catalyst::Plugin::Session::Store::Memcached
+    - Catalyst::View::Download::CSV
+    - Catalyst::View::JSON
+    - Catalyst::View::TT
+    - Class::Accessor::Fast
+    - Class::Data::Inheritable
+    - DBIx::Class::Schema::Loader
+    - Daemon::Generic
+    - Data::Recursive::Encode
+    - Data::Section::Simple
+    - Data::Visitor::Callback
+    - DateTime
+    - DateTime::Format::ISO8601
+    - DateTime::Format::MySQL
+    - DateTime::Format::Strptime
+    - Digest::SHA1
+    - Email::MIME
+    - Email::MIME::Creator
+    - Email::Send
+    - Encode
+    - File::HomeDir
+    - File::Util
+    - FindBin::libs
+    - FormValidator::Simple
+    - FormValidator::Simple::Constants
+    - FormValidator::Simple::Exception
+    - FormValidator::Simple::Plugin::Japanese
+    - FormValidator::Simple::Validator
+    - Getopt::Long
+    - HTML::Entities
+    - HTML::ExtractContent
+    - HTML::Feature
+    - HTML::Scrubber
+    - HTML::TreeBuilder
+    - HTML::TreeBuilder::LibXML
+    - HTTP::BrowserDetect
+    - HTTP::Response
+    - JSON::XS
+    - List::Compare
+    - List::MoreUtils
+    - Log::Dispatch::Config
+    - Log::Dispatch::Configurator
+    - Log::Dispatch::File::Stamped
+    - Log::Dispatch::Screen::Color
+    - MRO::Compat
+    - Mail::Sendmail
+    - MooseX::Object::Pluggable
+    - Net::Twitter::Lite::WithAPIv1_1
+    - Number::Bytes::Human
+    - Parallel::ForkManager
+    - Parallel::Prefork
+    - Perl6::Say
+    - Plack::Middleware::Session
+    - Readonly
+    - SQL::Abstract::Plugin::InsertMulti
+    - Spreadsheet::WriteExcel
+    - String::CamelCase
+    - String::Random
+    - Sub::Retry
+    - Sys::Syslog
+    - Template::Plugin::DateTime
+    - Text::CSV_XS
+    - Text::Xslate
+    - TheSchwartz
+    - TheSchwartz::Moosified
+    - TheSchwartz::Worker
+    - Time::Piece
+    - UNIVERSAL::require
+    - URI::Query
+    - Web::Scraper
+    - Web::Scraper::Config
+    - YAML
+    - YAML::Syck
+    - common::sense
+    - feature
+    - namespace::autoclean
+    - parent
